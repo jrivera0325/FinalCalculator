@@ -18,17 +18,58 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
     }
-    @IBAction func calculate(_ sender: UIButton) {
-        let currentGrade = Int(textFieldOne.text!)!
-        let desiredGrade = Int(textFieldTwo.text!)!
-        let testPercent = Int(textFieldThree.text!)!
-        let answer = (0.1 * desiredGrade - (100 - testPercent) * currentGrade) / desiredGrade
+    @IBAction func calculate(_ sender: AnyObject) {
+//        let currentGrade = (textFieldOne.text! as NSString).doubleValue
+//        let desiredGrade = (textFieldTwo.text! as NSString).doubleValue
+//        let testPercent = (textFieldThree.text! as NSString).doubleValue
+//
+//        let answer = (100 * desiredGrade - (100 - testPercent) * currentGrade) / desiredGrade;
+//
+//        percentNeeded.text! = ("\(answer)")
         
-        percentNeeded.text! = ("\(answer)")
+        finalGrade()
         
         
     }
+    func finalGrade() -> Int {
+        if let desiredGradeInt:Int = Int(textFieldTwo.text!)!
+        {
+            var currentGradeDouble:Double = Double(textFieldOne.text!)!
+            let testPercentInt:Int = Int(textFieldThree.text!)!
+            
+            var examGradePart1:Double = Double(100 - testPercentInt)
+            examGradePart1 = examGradePart1 / 100
+            
+            let testPercentDouble = Double(testPercentInt) / 100
+            currentGradeDouble = currentGradeDouble / 100
+            
+            var desiredGradeDouble = Double(desiredGradeInt)
+            desiredGradeDouble = desiredGradeDouble / 100
+    
+            // Math Part
+            
+            let desiredGradeMinusExamPart1 = examGradePart1 * currentGradeDouble
+            
+            let desiredGradeMinusExamTimesCurrent = desiredGradeDouble - desiredGradeMinusExamPart1
+            
+            var desiredGradeMinusExamTimesCurrentDivideTestPercent = desiredGradeMinusExamTimesCurrent / testPercentDouble
+            
+            desiredGradeMinusExamTimesCurrentDivideTestPercent = desiredGradeMinusExamTimesCurrentDivideTestPercent * 100
+            
+            let desiredGradeMinusExamTimesCurrentDivideTestPercentInt = Int(desiredGradeMinusExamTimesCurrentDivideTestPercent)
+            
+            let desiredGradeMinusExamTimesCurrentDivideTestGradeIntString = String(desiredGradeMinusExamTimesCurrentDivideTestPercentInt)
+            
+            percentNeeded.text = (desiredGradeMinusExamTimesCurrentDivideTestGradeIntString + "%")
+            
+            print("Success!")
+            
+            return Int(desiredGradeMinusExamTimesCurrentDivideTestPercent)
+            
+        }
+        
     
     
 }
 
+}
